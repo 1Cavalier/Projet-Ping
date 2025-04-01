@@ -1,0 +1,5 @@
+model\Joueur.class
+Main.class
+model\Categorie.class
+view\PanelAdmin.class
+view\PanelJoueur.class
