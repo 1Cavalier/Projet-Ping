@@ -7,10 +7,14 @@ public class Table implements Serializable {
 
     private int numero;
     private boolean occupee;
+    private boolean active;
+    private Rencontre rencontreActuelle;
 
     public Table(int numero) {
         this.numero = numero;
         this.occupee = false;
+        this.active = true;
+        this.rencontreActuelle = null;
     }
 
     public int getNumero() {
@@ -21,16 +25,32 @@ public class Table implements Serializable {
         return occupee;
     }
 
-    public void occuper() {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void occuper(Rencontre rencontre) {
         this.occupee = true;
+        this.rencontreActuelle = rencontre;
     }
 
     public void liberer() {
         this.occupee = false;
+        this.rencontreActuelle = null;
+    }
+
+    public Rencontre getRencontreActuelle() {
+        return rencontreActuelle;
     }
 
     @Override
     public String toString() {
+        if (!active)
+            return "Table " + numero + " (désactivée)";
         return "Table " + numero + (occupee ? " (occupée)" : " (libre)");
     }
 }

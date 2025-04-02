@@ -19,7 +19,7 @@ public class Rencontre implements Serializable {
             throw new IllegalStateException(
                     "Les deux équipes doivent être en état EN_ATTENTE pour commencer une rencontre.");
         }
-
+        this.table = table;
         this.equipeA = equipeA;
         this.equipeB = equipeB;
         this.table = table;
@@ -32,18 +32,18 @@ public class Rencontre implements Serializable {
         equipeB.setEtat(Etat.EN_MATCH);
 
         // On occupe la table
-        table.occuper();
+        table.occuper(this);
 
         // Initialisation des matchs simples
         for (int i = 0; i < 4; i++) {
             matchs.add(new Match(equipeA.getJoueurs().get(i), equipeA, equipeB.getJoueurs().get(i), equipeB));
         }
 
-        // Match double — joueurs à définir plus tard par l'utilisateur ou logique future
+        // Match double — joueurs à définir plus tard par l'utilisateur ou logique
+        // future
         matchs.add(new MatchDouble(
-            equipeA.getJoueurs().get(0), equipeA.getJoueurs().get(1), equipeA,
-            equipeB.getJoueurs().get(0), equipeB.getJoueurs().get(1), equipeB
-        ));
+                equipeA.getJoueurs().get(0), equipeA.getJoueurs().get(1), equipeA,
+                equipeB.getJoueurs().get(0), equipeB.getJoueurs().get(1), equipeB));
     }
 
     public void terminerRencontre() {
@@ -56,14 +56,20 @@ public class Rencontre implements Serializable {
         for (Object matchObj : matchs) {
             if (matchObj instanceof Match) {
                 Match match = (Match) matchObj;
-                if (!match.estTermine()) return;
-                if (match.getGagnant() == equipeA) scoreA++;
-                else if (match.getGagnant() == equipeB) scoreB++;
+                if (!match.estTermine())
+                    return;
+                if (match.getGagnant() == equipeA)
+                    scoreA++;
+                else if (match.getGagnant() == equipeB)
+                    scoreB++;
             } else if (matchObj instanceof MatchDouble) {
                 MatchDouble matchDouble = (MatchDouble) matchObj;
-                if (!matchDouble.estTermine()) return;
-                if (matchDouble.getGagnante() == equipeA) scoreA++;
-                else if (matchDouble.getGagnante() == equipeB) scoreB++;
+                if (!matchDouble.estTermine())
+                    return;
+                if (matchDouble.getGagnante() == equipeA)
+                    scoreA++;
+                else if (matchDouble.getGagnante() == equipeB)
+                    scoreB++;
             }
         }
 

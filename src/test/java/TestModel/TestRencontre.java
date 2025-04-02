@@ -73,7 +73,7 @@ public class TestRencontre {
     @Test
     public void testTableEtat() {
         assertFalse(table.isOccupee());
-        table.occuper();
+        table.isOccupee();
         assertTrue(table.isOccupee());
         table.liberer();
         assertFalse(table.isOccupee());
